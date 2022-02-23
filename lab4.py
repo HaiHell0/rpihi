@@ -36,24 +36,29 @@ def armButtonPress(armed):
     if armed: 
         armed = False
         armedLed.off()
+        print("armedLed Off")
     else: 
         armed = True
         armedLed.on()
+        print("armedLed On")
 
 def motionSensed(armed):
-    if armed and (not alarm):
+    if armed:
+        alarm = True
         alarmLed.on()
-        sendMessage("Something")
+        
+
+def motionNotSensed():
+    if alarm:
+        alarm = False
+        alarmLed.off()
+
 
 def sendMessage(Message):
     print(Message)
 
-def motionNotSensed():
-    if armed and alarm:
-        alarmLed.off()
-
 def main():
     armedLed.when_pressed = armButtonPress
-    motion.when_motion = motionSensed
     motion.when_no_motion = motionNotSensed
+    motion.when_motion = motionSensed
 main()
